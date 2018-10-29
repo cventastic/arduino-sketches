@@ -1,26 +1,4 @@
-/*
- # This sample code is used to test the pH meter V1.0.
- # Editor : YouYou
- # Ver    : 1.0
- # Product: analog pH meter
- # SKU    : SEN0161
-*/
-#define SensorPin A2            //pH meter Analog output to Arduino Analog Input 0
-#define Offset 0.00            //deviation compensate
-#define LED 13
-#define samplingInterval 20
-#define printInterval 800
-#define ArrayLenth  40    //times of collection
-int pHArray[ArrayLenth];   //Store the average value of the sensor feedback
-int pHArrayIndex=0;    
-void setup(void)
-{
-  pinMode(LED,OUTPUT);  
-  Serial.begin(9600);  
-  Serial.println("pH meter experiment!");    //Test the serial monitor
-}
-void loop(void)
-{
+void GetPH(){
   static unsigned long samplingTime = millis();
   static unsigned long printTime = millis();
   static float pHValue,voltage;
@@ -34,10 +12,10 @@ void loop(void)
   }
   if(millis() - printTime > printInterval)   //Every 800 milliseconds, print a numerical, convert the state of the LED indicator
   {
-        Serial.print("Voltage:");
+  Serial.print("Voltage:");
         Serial.print(voltage,2);
         Serial.print("    pH value: ");
-        Serial.println(pHValue,2);
+  Serial.println(pHValue,2);
         digitalWrite(LED,digitalRead(LED)^1);
         printTime=millis();
   }
