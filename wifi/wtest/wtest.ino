@@ -63,6 +63,12 @@ void loop()
     Serial.write(c);
   }
 
+  //if (!client.connected()) {
+  //  Serial.println();
+  //  Serial.println("Disconnecting from server...");
+  //  client.stop();
+  //}
+  
   // if 10 seconds have passed since your last connection,
   // then connect again and send data
   if (millis() - lastConnectionTime > postingInterval) {
@@ -80,7 +86,7 @@ void httpRequest()
   client.stop();
 
   // if there's a successful connection
-  if (client.connect(server, 80)) {
+  if (client.connectSSL(server, 443)) {
     Serial.println("Connecting...");
 
     String PostHeader = "POST /sensordata.php HTTP/1.1\r\n";
@@ -94,7 +100,6 @@ void httpRequest()
     Serial.println(PostHeader);
     client.println(PostHeader);
 
-    printWifiStatus();
     
     // note the time that the connection was made
     lastConnectionTime = millis();
