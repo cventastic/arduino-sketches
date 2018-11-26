@@ -1,7 +1,9 @@
 void GetPH(){
   static unsigned long samplingTime = millis();
   static unsigned long printTime = millis();
-  static float pHValue,voltage;
+  static float pHValue;
+  static float voltage;
+  
   if(millis()-samplingTime > samplingInterval)
   {
       pHArray[pHArrayIndex++]=analogRead(SensorPin);
@@ -16,6 +18,7 @@ void GetPH(){
         Serial.print(voltage,2);
         Serial.print("    pH value: ");
   Serial.println(pHValue,2);
+  phelp = pHValue;
         digitalWrite(LED,digitalRead(LED)^1);
         printTime=millis();
   }

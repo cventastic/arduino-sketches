@@ -1,7 +1,21 @@
 //*********************************Setup - runs Once and sets pins etc ******************************************************//
 void setup()
 {
-  Serial.begin(9600);
+    // initialize serial for debugging
+  Serial.begin(115200);
+  // initialize serial for ESP module
+  Serial1.begin(115200);
+  // initialize ESP module
+  WiFi.init(&Serial1);
+  // attempt to connect to WiFi network
+  while ( status != WL_CONNECTED) {
+    Serial.print("Attempting to connect to WPA SSID: ");
+    Serial.println(ssid);
+    status = WiFi.begin(ssid, pass);
+  }
+  Serial.println("You're connected to the network");
+  printWifiStatus();
+  
   pinMode(TempProbeNegative , OUTPUT ); //seting ground pin as output for tmp probe
   digitalWrite(TempProbeNegative , LOW );//Seting it to ground so it can sink current
   pinMode(TempProbePossitive , OUTPUT );//ditto but for positive
@@ -18,9 +32,6 @@ void setup()
   // Consule Read-Me for Why, or just accept it as true
   R1=(R1+Ra);// Taking into acount Powering Pin Resitance
  
-  Serial.println("ElCheapo Arduino EC-PH measurments");
-  Serial.println("Measurments at 5's Second intervals [Dont read Ec morre than once every 5 seconds]:");
-
   pinMode(LED,OUTPUT);  
 
   Serial.println("pH meter experiment!");    //Test the serial monitor

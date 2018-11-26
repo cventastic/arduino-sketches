@@ -1,3 +1,27 @@
+// Wifi
+#include "WiFiEsp.h"
+#include "secret.h"
+
+#ifndef HAVE_HWSERIAL1
+#include "SoftwareSerial.h"
+SoftwareSerial Serial1(19, 18); // RX, TX
+#endif
+
+int status = WL_IDLE_STATUS;
+
+char server[] = "sven-holter.de";
+
+unsigned long lastConnectionTime = 0;         // last time you connected to the server, in milliseconds
+const unsigned long postingInterval = 10000L; // delay between updates, in milliseconds
+
+// Initialize the Ethernet client object
+WiFiEspClient client;
+
+int value = 1;
+//String PostData = "EC%3D1%26PH%3D2%26WTEMP%3D4";
+//String PostData = "EC=1&PH=2&WTEMP=4";
+
+
 // EC
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -39,8 +63,6 @@ float buffer=0;
 int pHArray[ArrayLenth];   //Store the average value of the sensor feedback
 int pHArrayIndex=0;    
 // END PH Probe Vars
-
- 
  
 
  
